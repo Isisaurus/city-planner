@@ -109,3 +109,8 @@ To auto-format your code upon change using prettier, run:
 ```bash
 npm run prettier-watch
 ```
+
+# Resources
+
+- Used [Flowbite](https://flowbite.com/) for quick prototyping;
+- [Auth.js](https://authjs.dev/getting-started/installation?framework=next-js) for the heavy lifting on authentication and session management;
