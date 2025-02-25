@@ -1,15 +1,11 @@
 import Link from "next/link";
-import { auth, signOut } from "../../../../../auth";
-import { UserDropdown } from "@/app/components/ui";
+import { auth, signOut } from "@/../auth";
+import { UserDropdown } from "@/components/ui";
 
 const headerLinksArr: { label: string; location: string }[] = [
   {
     label: "Home",
     location: "/",
-  },
-  {
-    label: "News",
-    location: "/news",
   },
   {
     label: "Projects",
