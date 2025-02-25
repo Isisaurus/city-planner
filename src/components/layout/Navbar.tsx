@@ -28,7 +28,7 @@ export async function Navbar() {
 
   return (
     <header className="px-2">
-      <nav className="constainer flex items-center gap-2 px-4 py-2 my-2 rounded-full bg-white shadow-md relative">
+      <nav className="container flex items-center gap-2 px-4 py-2 my-2 rounded-full bg-white shadow-md relative">
         <Link href="/" className="flex items-center gap-1">
           <span className="bg-black text-white rounded-full w-9 h-9 flex items-center justify-center">
             CP
@@ -49,7 +49,9 @@ export async function Navbar() {
               className="button flex items-center justify-center gap-2"
             >
               <span>Sign in</span>
-              <ArrowRight className="size-5 text-white" />
+              <span className="bg-white rounded-full p-1">
+                <ArrowRight className="size-5 text-black" />
+              </span>
             </Link>
           )}
           <BurgerMenu navItems={navItems} />

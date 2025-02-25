@@ -6,6 +6,10 @@
   @apply mx-auto max-w-screen-xl;
 }
 
+.section {
+  @apply px-2 md:px-4;
+}
+
 .button {
   @apply rounded-full bg-black px-5 py-2 text-white hover:bg-black/80 cursor-pointer;
 }
