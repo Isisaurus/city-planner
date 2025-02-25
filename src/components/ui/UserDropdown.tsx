@@ -3,7 +3,7 @@
 import { User } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 interface UserDropdownProps {
   handleLogout: () => void;
@@ -12,6 +12,7 @@ interface UserDropdownProps {
 
 export function UserDropdown({ handleLogout, user }: UserDropdownProps) {
   const [isActive, setIsActive] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const toggleDropdown = () => {
     setIsActive((prev) => !prev);
@@ -37,6 +38,23 @@ export function UserDropdown({ handleLogout, user }: UserDropdownProps) {
   ];
   const imageUrl = user.image;
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setIsActive(false);
+      } else {
+        return;
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div>
       <button
@@ -44,9 +62,8 @@ export function UserDropdown({ handleLogout, user }: UserDropdownProps) {
         className="flex text-sm rounded-full md:me-0 focus:ring-4 focus:ring-gray-300"
         id="user-menu-button"
         aria-expanded={isActive}
-        data-dropdown-toggle="user-dropdown"
-        data-dropdown-placement="bottom"
         onClick={toggleDropdown}
+        ref={buttonRef}
       >
         <span className="sr-only">Open user menu</span>
         {user.image ? (
@@ -62,7 +79,7 @@ export function UserDropdown({ handleLogout, user }: UserDropdownProps) {
         )}
       </button>
       <div
-        className={`absolute right-0 top-12 grid transition-all duration-300 ease-in-out overflow-hidden ${
+        className={`absolute right-0 top-16 grid transition-all duration-300 ease-in-out overflow-hidden ${
           isActive
             ? "grid-rows-[1fr] opacity-100 z-50"
             : "grid-rows-[0fr] opacity-0"

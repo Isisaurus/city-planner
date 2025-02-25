@@ -1,23 +1,24 @@
 import Link from "next/link";
 import { auth, signOut } from "@/../auth";
-import { UserDropdown } from "@/components/ui";
+import { UserDropdown, NavLink, BurgerMenu } from "@/components/ui";
+import { ArrowRight } from "@/components/icons";
 
-const headerLinksArr: { label: string; location: string }[] = [
-  {
-    label: "Home",
-    location: "/",
-  },
-  {
-    label: "Projects",
-    location: "/projects",
-  },
-  {
-    label: "City Card",
-    location: "/city-card",
-  },
-];
 export async function Navbar() {
   const session = await auth();
+  const navItems: { label: string; href: string }[] = [
+    {
+      label: "Home",
+      href: "/",
+    },
+    {
+      label: "Projects",
+      href: "/projects",
+    },
+    {
+      label: "City Card",
+      href: "/city-card",
+    },
+  ];
 
   const handleLogout = async () => {
     "use server";
@@ -26,35 +27,33 @@ export async function Navbar() {
   };
 
   return (
-    <header className="px-5 py-3 shadow-sm">
-      <nav className="bg-white border-gray-200 max-w-screen-xl flex flex-wrap items-center justify-between mx-auto relative">
-        <Link
-          href="/"
-          className="flex items-center space-x-3 rtl:space-x-reverse"
-        >
-          <span className="self-center text-2xl font-semibold whitespace-nowrap ">
-            City Planner
+    <header className="px-2">
+      <nav className="constainer flex items-center gap-2 px-4 py-2 my-2 rounded-full bg-white shadow-md relative">
+        <Link href="/" className="flex items-center gap-1">
+          <span className="bg-black text-white rounded-full w-9 h-9 flex items-center justify-center">
+            CP
           </span>
+          <span className="font-bold">City Planner</span>
         </Link>
-
-        <ul className="flex-1 mx-auto flex items-center justify-center font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white md:">
-          {headerLinksArr.map((navLink) => (
-            <li
-              key={navLink.label}
-              className="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0"
-              aria-current="page"
-            >
-              <Link href={navLink.location}>
-                <span>{navLink.label}</span>
-              </Link>
-            </li>
+        <ul className="font-medium flex-1 justify-center invisible hidden md:flex md:visible">
+          {navItems.map((navItem) => (
+            <NavLink navItem={navItem} key={navItem.label} />
           ))}
         </ul>
-        {session && session?.user ? (
-          <UserDropdown handleLogout={handleLogout} user={session.user} />
-        ) : (
-          <Link href={"/login"}>Login</Link>
-        )}
+        <div className="flex gap-2 ml-auto md:ml-0 items-center">
+          {session && session?.user ? (
+            <UserDropdown handleLogout={handleLogout} user={session.user} />
+          ) : (
+            <Link
+              href={"/login"}
+              className="button flex items-center justify-center gap-2"
+            >
+              <span>Sign in</span>
+              <ArrowRight className="size-5 text-white" />
+            </Link>
+          )}
+          <BurgerMenu navItems={navItems} />
+        </div>
       </nav>
     </header>
   );
