@@ -1,8 +1,14 @@
 import { MagnifyingGlass } from "@/components/icons";
+import { ResetSearchFormButton } from "@/components/ui";
 import Form from "next/form";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ query?: string }>;
+}) {
+  const query = (await searchParams).query;
   return (
     <>
       <section className="container section min-h-[50vh] bg-gradient-to-r from-gray-200 via-cyan-200 to-gray-200 rounded-3xl flex flex-col gap-4 items-center justify-center text-center text-black">
@@ -15,24 +21,31 @@ export default function Home() {
         </p>
         <Form
           action="/"
+          scroll={false}
           className="bg-white py-2 px-3 rounded-full flex gap-1 my-4"
+          id="search-form"
         >
           <input
             name="query"
             type="text"
             required
             minLength={2}
+            placeholder="Search projects..."
+            defaultValue={query}
             className="md:w-[400px] flex-1 rounded-full py-1 px-3"
           />
-          <button
-            type="submit"
-            className="button flex gap-2 items-center justify-center"
-          >
-            <span>Search</span>
-            <span className="bg-white rounded-full p-1">
-              <MagnifyingGlass className="size-5 text-black" />
-            </span>
-          </button>
+          <div className="flex items-center gap-2">
+            {query && <ResetSearchFormButton />}
+            <button
+              type="submit"
+              className="button flex gap-2 items-center justify-center"
+            >
+              <span>Search</span>
+              <span className="bg-white rounded-full p-1">
+                <MagnifyingGlass className="size-5 text-black" />
+              </span>
+            </button>
+          </div>
         </Form>
       </section>
       <section className="container section">
