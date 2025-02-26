@@ -12,8 +12,9 @@ export default async function Home({
   searchParams: Promise<{ query?: string }>;
 }) {
   const query = (await searchParams).query;
+  const params = { search: query || null };
 
-  const allProjects: Project[] = await client.fetch(PROJECTS_QUERY);
+  const allProjects: Project[] = await client.fetch(PROJECTS_QUERY, params);
 
   // const posts = [
   //   {
