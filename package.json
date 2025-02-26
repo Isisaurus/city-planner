@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettier-watch": "onchange \"**/*\" -- prettier --write --ignore-unknown {{changed}}"
+    "prettier-watch": "onchange \"src/**/*\" -- prettier --write --ignore-unknown {{changed}}"
   },
   "dependencies": {
     "next": "15.1.7",
