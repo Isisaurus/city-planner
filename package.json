@@ -9,10 +9,11 @@
     "lint": "next lint",
     "prettier-watch": "onchange \"src/**/*\" -- prettier --write --ignore-unknown {{changed}}",
     "predev": "npm run typegen",
-    "prebuild" : "npm run typegen",
+    "prebuild": "npm run typegen",
     "typegen": "sanity schema extract --path=./src/sanity/extract.json && sanity typegen generate"
   },
   "dependencies": {
+    "@portabletext/react": "^3.2.1",
     "@sanity/vision": "^3.77.2",
     "next": "15.1.7",
     "next-auth": "^5.0.0-beta.25",

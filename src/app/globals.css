@@ -18,6 +18,10 @@
   @apply rounded-full px-5 py-2 border border-transparent bg-white shadow-md hover:border hover:border-black cursor-pointer transition-all ease-in;
 }
 
+/* .portabletext {
+
+} */
+
 @keyframes float-down {
   0% {
     @apply translate-y-0 opacity-100;
