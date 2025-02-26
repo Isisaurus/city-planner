@@ -3,15 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "prettier-watch": "onchange \"src/**/*\" -- prettier --write --ignore-unknown {{changed}}"
   },
   "dependencies": {
+    "@sanity/vision": "^3.77.2",
     "next": "15.1.7",
     "next-auth": "^5.0.0-beta.25",
+    "next-sanity": "^9.8.60",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

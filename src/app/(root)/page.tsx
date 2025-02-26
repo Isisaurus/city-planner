@@ -23,6 +23,19 @@ export default async function Home({
       image:
         "https://images.unsplash.com/photo-1624455761280-2f6d83ee3dcc?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
+    {
+      _createdAt: "Today",
+      _id: 1235,
+      title: "Road renovations on Main Street",
+      votes: 55,
+      author: { _id: 3333, name: "Lance" },
+      description:
+        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Excepturi, minima voluptatum magnam cum fugiat voluptatibus nobis! Obcaecati similique iure illo.",
+      category: "public",
+      status: "Appeal",
+      image:
+        "https://images.unsplash.com/photo-1609350874540-eac4bf756eb2?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
   ];
 
   return (

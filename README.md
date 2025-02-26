@@ -114,3 +114,4 @@ npm run prettier-watch
 
 - Used [Flowbite](https://flowbite.com/) for quick prototyping;
 - [Auth.js](https://authjs.dev/getting-started/installation?framework=next-js) for the heavy lifting on authentication and session management;
+- [Sanity](https://www.sanity.io/) as data serving and management;
