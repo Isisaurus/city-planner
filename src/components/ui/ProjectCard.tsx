@@ -2,25 +2,14 @@
 import React from "react";
 import { ThumbsUp } from "../icons";
 import Link from "next/link";
+import { Project } from "@/sanity/types";
+import { formatDate } from "@/lib/utils";
 
-interface TPost {
-  _createdAt: string;
-  _id: number;
-  title: string;
-  votes: number;
-  author: { _id: number; name: string };
-  description: string;
-  category: string;
-  status: string;
-  image: string;
-}
-
-export const ProjectCard = ({ post }: { post: TPost }) => {
-  const { _createdAt, _id, author, description, image, status, title, votes } =
-    post;
+export const ProjectCard = ({ project }: { project: Project }) => {
+  const { _createdAt, slug, _id, summary, status, title, votes } = project;
 
   return (
-    <li>
+    <li id={_id}>
       <div className="flex flex-col max-w-sm bg-white rounded-xl shadow-md divide-y divide-gray-100">
         <div className="px-4 py-2">
           <div className="flex justify-between items-center mb-4">
@@ -38,18 +27,18 @@ export const ProjectCard = ({ post }: { post: TPost }) => {
           </div>
 
           <div className="my-3">
-            <p>{description}</p>
+            <p>{summary}</p>
           </div>
-          <img src={image} alt="project image" className="rounded-lg" />
+          {/* <img src={image} alt="project image" className="rounded-lg" /> */}
 
           <div className="text-sm flex items-center justify-between my-2">
-            <p>{_createdAt}</p>
-            <p>by {author.name}</p>
+            <p>{formatDate(_createdAt)}</p>
+            <p>by City Hall</p>
           </div>
         </div>
 
         <div className="flex justify-between items-center px-4 py-5">
-          <Link href={`/projects/${_id}`} className="button">
+          <Link href={`/projects/${slug?.current}`} className="button">
             Project Details
           </Link>
         </div>

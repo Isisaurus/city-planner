@@ -1,5 +1,8 @@
 import { ArrowRight, MagnifyingGlass } from "@/components/icons";
 import { ProjectCard, ResetSearchFormButton } from "@/components/ui";
+import { client } from "@/sanity/lib/client";
+import { PROJECTS_QUERY } from "@/sanity/lib/queries";
+import { Project } from "@/sanity/types";
 import Form from "next/form";
 import Link from "next/link";
 
@@ -10,33 +13,35 @@ export default async function Home({
 }) {
   const query = (await searchParams).query;
 
-  const posts = [
-    {
-      _createdAt: "Yesterday",
-      _id: 1234,
-      title: "New Playground at Noway Street",
-      votes: 123,
-      author: { _id: 3333, name: "Lance" },
-      description: `This is a description`,
-      category: "playground",
-      status: "Appeal",
-      image:
-        "https://images.unsplash.com/photo-1624455761280-2f6d83ee3dcc?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      _createdAt: "Today",
-      _id: 1235,
-      title: "Road renovations on Main Street",
-      votes: 55,
-      author: { _id: 3333, name: "Lance" },
-      description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Excepturi, minima voluptatum magnam cum fugiat voluptatibus nobis! Obcaecati similique iure illo.",
-      category: "public",
-      status: "Appeal",
-      image:
-        "https://images.unsplash.com/photo-1609350874540-eac4bf756eb2?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-  ];
+  const allProjects: Project[] = await client.fetch(PROJECTS_QUERY);
+
+  // const posts = [
+  //   {
+  //     _createdAt: "Yesterday",
+  //     _id: 1234,
+  //     title: "New Playground at Noway Street",
+  //     votes: 123,
+  //     author: { _id: 3333, name: "Lance" },
+  //     description: `This is a description`,
+  //     category: "playground",
+  //     status: "Appeal",
+  //     image:
+  //       "https://images.unsplash.com/photo-1624455761280-2f6d83ee3dcc?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //   },
+  //   {
+  //     _createdAt: "Today",
+  //     _id: 1235,
+  //     title: "Road renovations on Main Street",
+  //     votes: 55,
+  //     author: { _id: 3333, name: "Lance" },
+  //     description:
+  //       "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Excepturi, minima voluptatum magnam cum fugiat voluptatibus nobis! Obcaecati similique iure illo.",
+  //     category: "public",
+  //     status: "Appeal",
+  //     image:
+  //       "https://images.unsplash.com/photo-1609350874540-eac4bf756eb2?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //   },
+  // ];
 
   return (
     <>
@@ -83,8 +88,10 @@ export default async function Home({
         </p>
 
         <ul className="mt-7 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-          {posts.length > 0 ? (
-            posts.map((post) => <ProjectCard key={post._id} post={post} />)
+          {allProjects.length > 0 ? (
+            allProjects.map((project) => (
+              <ProjectCard key={project._id} project={project} />
+            ))
           ) : (
             <p>No projects found</p>
           )}

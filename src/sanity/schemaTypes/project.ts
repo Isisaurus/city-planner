@@ -51,5 +51,10 @@ export const project = defineType({
       type: "array",
       of: [{ type: "block" }],
     }),
+    defineField({
+      name: "votes",
+      title: "Votes",
+      type: "number",
+    }),
   ],
 });

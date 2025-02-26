@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettier-watch": "onchange \"src/**/*\" -- prettier --write --ignore-unknown {{changed}}"
+    "prettier-watch": "onchange \"src/**/*\" -- prettier --write --ignore-unknown {{changed}}",
+    "predev": "npm run typegen",
+    "prebuild" : "npm run typegen",
+    "typegen": "sanity schema extract --path=./src/sanity/extract.json && sanity typegen generate"
   },
   "dependencies": {
     "@sanity/vision": "^3.77.2",
