@@ -202,8 +202,107 @@ export type AllSanitySchemaTypes =
   | User;
 export declare const internalGroqTy; // Source: ./src/sanity/lib/queries.ts
 // Variable: PROJECTS_QUERY
-// Query: *[_type=='project'] | order(_createdAt desc){_id, title, slug, _createdAt, summary, status, description, votes}
-export type PROJECTS_QUERYResult = Array<{
+// Query: *[_type=='project' && !defined($search) || title match $search || description match $search || summary match $search] | order(_createdAt desc){_id, title, slug, _createdAt, summary, status, description, votes, _type, _updatedAt, _rev, coverImage}
+export type PROJECTS_QUERYResult = Array<
+  | {
+      _id: string;
+      title: null;
+      slug: null;
+      _createdAt: string;
+      summary: null;
+      status: null;
+      description: null;
+      votes: null;
+      _type: "comment";
+      _updatedAt: string;
+      _rev: string;
+      coverImage: null;
+    }
+  | {
+      _id: string;
+      title: string | null;
+      slug: Slug | null;
+      _createdAt: string;
+      summary: string | null;
+      status: "appeal" | "completed" | "progress" | "review" | null;
+      description: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          | "blockquote"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }> | null;
+      votes: number | null;
+      _type: "project";
+      _updatedAt: string;
+      _rev: string;
+      coverImage: string | null;
+    }
+  | {
+      _id: string;
+      title: string | null;
+      slug: null;
+      _createdAt: string;
+      summary: null;
+      status: null;
+      description: string | null;
+      votes: null;
+      _type: "sanity.fileAsset";
+      _updatedAt: string;
+      _rev: string;
+      coverImage: null;
+    }
+  | {
+      _id: string;
+      title: string | null;
+      slug: null;
+      _createdAt: string;
+      summary: null;
+      status: null;
+      description: string | null;
+      votes: null;
+      _type: "sanity.imageAsset";
+      _updatedAt: string;
+      _rev: string;
+      coverImage: null;
+    }
+  | {
+      _id: string;
+      title: null;
+      slug: null;
+      _createdAt: string;
+      summary: null;
+      status: null;
+      description: null;
+      votes: null;
+      _type: "user";
+      _updatedAt: string;
+      _rev: string;
+      coverImage: null;
+    }
+>;
+// Variable: PROJECT_QUERY
+// Query: *[_type=='project' && slug.current == $slug]{_id, title, slug, _createdAt, summary, status, description, votes, _type, _updatedAt, _rev}
+export type PROJECT_QUERYResult = Array<{
   _id: string;
   title: string | null;
   slug: Slug | null;
@@ -229,12 +328,23 @@ export type PROJECTS_QUERYResult = Array<{
     _key: string;
   }> | null;
   votes: number | null;
+  _type: "project";
+  _updatedAt: string;
+  _rev: string;
+}>;
+// Variable: PROJECTVOTES_QUERY
+// Query: *[_type=='project' && _id == $projectId]{_id, votes}
+export type PROJECTVOTES_QUERYResult = Array<{
+  _id: string;
+  votes: number | null;
 }>;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type=='project'] | order(_createdAt desc){_id, title, slug, _createdAt, summary, status, description, votes}": PROJECTS_QUERYResult;
+    "*[_type=='project' && !defined($search) || title match $search || description match $search || summary match $search] | order(_createdAt desc){_id, title, slug, _createdAt, summary, status, description, votes, _type, _updatedAt, _rev, coverImage}": PROJECTS_QUERYResult;
+    "*[_type=='project' && slug.current == $slug]{_id, title, slug, _createdAt, summary, status, description, votes, _type, _updatedAt, _rev}": PROJECT_QUERYResult;
+    "*[_type=='project' && _id == $projectId]{_id, votes}": PROJECTVOTES_QUERYResult;
   }
 }

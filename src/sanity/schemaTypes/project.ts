@@ -10,6 +10,7 @@ export const project = defineType({
       name: "title",
       title: "Title",
       type: "string",
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "slug",
@@ -18,11 +19,13 @@ export const project = defineType({
       options: {
         source: "title",
       },
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "summary",
       title: "Summary",
       type: "string",
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "status",
@@ -44,17 +47,20 @@ export const project = defineType({
       name: "coverImage",
       title: "Cover Image",
       type: "url",
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "description",
       title: "Description",
       type: "array",
       of: [{ type: "block" }],
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "votes",
       title: "Votes",
       type: "number",
+      initialValue: () => 0,
     }),
   ],
 });
