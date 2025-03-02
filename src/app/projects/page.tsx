@@ -1,5 +1,5 @@
 import { MagnifyingGlass } from "@/components/icons";
-import { ResetSearchFormButton } from "@/components/ui";
+import { ProjectsTable, ResetSearchFormButton } from "@/components/ui";
 import { client } from "@/sanity/lib/client";
 import { PROJECTS_SEARCH_QUERY } from "@/sanity/lib/queries";
 import { Project } from "@/sanity/types";
@@ -20,8 +20,8 @@ export default async function ProjectsPage({
 
   return (
     <>
-      <section className="container section bg-gradient-to-r from-gray-200 via-cyan-200 to-gray-200 py-10 rounded-3xl">
-        <div className="min-h-[20vh] flex flex-col gap-4 justify-center items-center text-center">
+      <section className="container section py-5 rounded-3xl">
+        <div className="min-h-[15vh] flex flex-col gap-4 justify-center items-center text-center">
           <h1 className="text-4xl md:text-4xl font-bold">Projects Overview</h1>
           <p>
             Browse all projects submitted, Lorem ipsum dolor, sit amet
@@ -33,7 +33,7 @@ export default async function ProjectsPage({
         <Form
           action="/projects"
           scroll={false}
-          className="bg-gray-200 py-5 px-5 flex gap-1 my-4"
+          className="bg-white border-2 border-black rounded-full py-2 px-3 flex gap-1 my-4 mx-auto max-w-screen-md"
           id="search-form"
         >
           <input
@@ -62,9 +62,9 @@ export default async function ProjectsPage({
       <section className="container section">
         <div>
           {allProjects.length > 0 ? (
-            allProjects.map((project) => (
-              <p key={project._id}>{project.title}</p>
-            ))
+            <div className="my-20">
+              <ProjectsTable initialProjects={allProjects} />
+            </div>
           ) : (
             <p>No projects found for `{query}`</p>
           )}
