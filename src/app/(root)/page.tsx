@@ -16,34 +16,6 @@ export default async function Home({
 
   const allProjects: Project[] = await client.fetch(PROJECTS_QUERY, params);
 
-  // const posts = [
-  //   {
-  //     _createdAt: "Yesterday",
-  //     _id: 1234,
-  //     title: "New Playground at Noway Street",
-  //     votes: 123,
-  //     author: { _id: 3333, name: "Lance" },
-  //     description: `This is a description`,
-  //     category: "playground",
-  //     status: "Appeal",
-  //     image:
-  //       "https://images.unsplash.com/photo-1624455761280-2f6d83ee3dcc?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-  //   {
-  //     _createdAt: "Today",
-  //     _id: 1235,
-  //     title: "Road renovations on Main Street",
-  //     votes: 55,
-  //     author: { _id: 3333, name: "Lance" },
-  //     description:
-  //       "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Excepturi, minima voluptatum magnam cum fugiat voluptatibus nobis! Obcaecati similique iure illo.",
-  //     category: "public",
-  //     status: "Appeal",
-  //     image:
-  //       "https://images.unsplash.com/photo-1609350874540-eac4bf756eb2?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-  // ];
-
   return (
     <>
       <section className="container section min-h-[50vh] bg-gradient-to-r from-gray-200 via-cyan-200 to-gray-200 rounded-3xl flex flex-col gap-4 items-center justify-center text-center text-black">
