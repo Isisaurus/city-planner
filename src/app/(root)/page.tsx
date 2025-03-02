@@ -1,7 +1,7 @@
 import { ArrowRight, MagnifyingGlass } from "@/components/icons";
 import { ProjectCard, ResetSearchFormButton } from "@/components/ui";
 import { client } from "@/sanity/lib/client";
-import { PROJECTS_QUERY } from "@/sanity/lib/queries";
+import { PROJECTS_SEARCH_QUERY } from "@/sanity/lib/queries";
 import { Project } from "@/sanity/types";
 import Form from "next/form";
 import Link from "next/link";
@@ -14,7 +14,10 @@ export default async function Home({
   const query = (await searchParams).query;
   const params = { search: query || null };
 
-  const allProjects: Project[] = await client.fetch(PROJECTS_QUERY, params);
+  const allProjects: Project[] = await client.fetch(
+    PROJECTS_SEARCH_QUERY,
+    params,
+  );
 
   return (
     <>
