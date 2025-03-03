@@ -3,6 +3,7 @@ import { formatDate } from "@/lib/utils";
 import { Project } from "@/sanity/types";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import ChevronDown from "../icons/ChevronDown";
 
 type TableHeaderType = {
   title: string;
@@ -32,12 +33,14 @@ export const ProjectsTable = ({
     setSortCriteria((prev) => {
       return {
         keyToSort: header.KEY,
-        direction: prev.direction === "desc" ? "asc" : "desc",
+        direction:
+          prev.keyToSort !== header.KEY
+            ? "desc"
+            : prev.direction === "desc"
+              ? "asc"
+              : "desc",
       };
     });
-    setFilteredProjects((prev) =>
-      prev?.length === 1 ? prev : getSortedProjects(),
-    );
   };
 
   const getSortedProjects = () => {
@@ -50,8 +53,8 @@ export const ProjectsTable = ({
 
       if (typeof valueA === "string" && typeof valueB === "string") {
         return sortCriteria.direction === "asc"
-          ? valueA.localeCompare(valueB)
-          : valueB.localeCompare(valueA);
+          ? valueB.localeCompare(valueA)
+          : valueA.localeCompare(valueB);
       } else if (typeof valueA === "number" && typeof valueB === "number") {
         return sortCriteria.direction === "asc"
           ? valueA - valueB
@@ -68,6 +71,16 @@ export const ProjectsTable = ({
   useEffect(() => {
     setFilteredProjects(initialProjects);
   }, [initialProjects]);
+
+  useEffect(() => {
+    if (filteredProjects) {
+      setFilteredProjects((prev) =>
+        prev?.length === 1 ? prev : getSortedProjects(),
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortCriteria]);
+
   return (
     <table className="w-full text-sm text-left text-gray-500">
       <thead className="text-xs text-gray-700 uppercase bg-gray-50">
@@ -75,10 +88,13 @@ export const ProjectsTable = ({
           {tableHeaders.map((tableheader) => (
             <th key={tableheader.KEY} scope="col">
               <button
-                className="px-2 md:px-6 py-3"
+                className="px-2 md:px-6 py-3 border-2 border-transparent hover:border-black w-full text-left flex justify-between items-center gap-1"
                 onClick={() => handleHeaderClick(tableheader)}
               >
-                {tableheader.title}
+                <span>{tableheader.title}</span>
+                <ChevronDown
+                  className={`size-4 stroke-[2.5] transition-all ease-out ${tableheader.KEY === sortCriteria.keyToSort && sortCriteria.direction === "asc" ? "rotate-180" : ""} ${tableheader.KEY !== sortCriteria.keyToSort ? "text-gray-200" : ""}`}
+                />
               </button>
             </th>
           ))}
