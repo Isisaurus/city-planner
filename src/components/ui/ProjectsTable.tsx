@@ -82,18 +82,18 @@ export const ProjectsTable = ({
   }, [sortCriteria]);
 
   return (
-    <table className="w-full text-sm text-left text-gray-500">
-      <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+    <table className="w-full text-sm text-left text-black bg-transparent">
+      <thead className="text-xs">
         <tr>
           {tableHeaders.map((tableheader) => (
             <th key={tableheader.KEY} scope="col">
               <button
-                className="px-2 md:px-6 py-3 border-2 border-transparent hover:border-black w-full text-left flex justify-between items-center gap-1"
+                className="px-2 md:px-6 py-3 border-2 border-transparent hover:border-black text-left flex justify-between items-center gap-1 uppercase bg-white rounded-full"
                 onClick={() => handleHeaderClick(tableheader)}
               >
                 <span>{tableheader.title}</span>
                 <ChevronDown
-                  className={`size-4 stroke-[2.5] transition-all ease-out ${tableheader.KEY === sortCriteria.keyToSort && sortCriteria.direction === "asc" ? "rotate-180" : ""} ${tableheader.KEY !== sortCriteria.keyToSort ? "text-gray-200" : ""}`}
+                  className={`size-4 stroke-[2.5] transition-all ease-out ${tableheader.KEY === sortCriteria.keyToSort && sortCriteria.direction === "asc" ? "rotate-180" : ""} ${tableheader.KEY !== sortCriteria.keyToSort ? "text-gray-400" : ""}`}
                 />
               </button>
             </th>
@@ -105,10 +105,10 @@ export const ProjectsTable = ({
           ? filteredProjects.map((project) => {
               const { _id, title, _createdAt, status, votes, slug } = project;
               return (
-                <tr key={_id} className="bg-white border-b border-gray-200">
+                <tr key={_id} className="border-b border-gray-200 font-light">
                   <th
                     scope="row"
-                    className="px-2 md:px-6 py-4 font-medium text-gray-900 md:whitespace-nowrap"
+                    className="px-2 md:px-6 py-4 font-medium md:whitespace-nowrap"
                   >
                     <Link
                       href={`projects/${slug?.current}`}
@@ -132,3 +132,5 @@ export const ProjectsTable = ({
 };
 
 export default ProjectsTable;
+
+// status should be checkbox

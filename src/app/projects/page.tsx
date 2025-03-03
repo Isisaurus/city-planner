@@ -62,7 +62,7 @@ export default async function ProjectsPage({
       <section className="container section">
         <div>
           {allProjects.length > 0 ? (
-            <div className="my-20">
+            <div className="my-20 bg-gradient-to-b from-cyan-50 via-gray-200/15 to-transparent rounded-3xl shadow-md md:px-2 pt-5 pb-10">
               <ProjectsTable initialProjects={allProjects} />
             </div>
           ) : (
@@ -73,11 +73,3 @@ export default async function ProjectsPage({
     </>
   );
 }
-
-// overview dashboard of ongoing projects and progress;
-// project organization table: title, publish date, votes, status;
-// search bar: results should also be able to be organized;
-// reuse Search functionality, set that as the query => result will be initialProjects;
-// initialProjects will be passed down to ProjectsTable as a default state;
-// client-side filters will apply;
-// should apply pagination?
