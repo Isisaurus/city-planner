@@ -5,6 +5,7 @@ import Link from "next/link";
 import React, { useEffect, useState, useRef } from "react";
 import ChevronDown from "../icons/ChevronDown";
 import { Funnel } from "../icons";
+import StatusLabel from "./StatusLabel";
 
 type TableHeaderType = {
   title: string;
@@ -179,7 +180,7 @@ export const ProjectsTable = ({
                                 type="checkbox"
                                 checked={statusFilter.has(status)}
                                 onChange={() => toggleStatusFilter(status)}
-                                className="w-4 h-4 rounded-md accent-cyan-500 cursor-pointer"
+                                className="w-4 h-4 rounded-md accent-black cursor-pointer"
                               />
                               <label
                                 htmlFor={`${status}-checkbox-list`}
@@ -254,7 +255,17 @@ export const ProjectsTable = ({
                     <td className="px-2 md:px-6 py-4">
                       {formatDate(_createdAt)}
                     </td>
-                    <td className="px-2 md:px-6 py-4 capitalize">{`In ${status}`}</td>
+                    <td className="px-2 md:px-6 py-4 capitalize">
+                      <StatusLabel
+                        label={
+                          status as
+                            | "review"
+                            | "appeal"
+                            | "progress"
+                            | "completed"
+                        }
+                      />
+                    </td>
                     <td className="px-2 md:px-6 py-4">{votes}</td>
                   </tr>
                 );
@@ -279,7 +290,17 @@ export const ProjectsTable = ({
                     <td className="px-2 md:px-6 py-4">
                       {formatDate(_createdAt)}
                     </td>
-                    <td className="px-2 md:px-6 py-4 capitalize">{`In ${status}`}</td>
+                    <td className="px-2 md:px-6 py-4 capitalize">
+                      <StatusLabel
+                        label={
+                          status as
+                            | "review"
+                            | "appeal"
+                            | "progress"
+                            | "completed"
+                        }
+                      />
+                    </td>
                     <td className="px-2 md:px-6 py-4">{votes}</td>
                   </tr>
                 );
