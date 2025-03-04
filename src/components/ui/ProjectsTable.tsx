@@ -291,5 +291,3 @@ export const ProjectsTable = ({
 };
 
 export default ProjectsTable;
-
-// status should be checkbox
