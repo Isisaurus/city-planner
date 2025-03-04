@@ -98,6 +98,8 @@ export const ProjectsTable = ({
 
   useEffect(() => {
     setProjectsPool(initialProjects);
+    setStatusFilter(new Set());
+    setFilteredProjects(null);
     getStatusOptions();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialProjects]);
