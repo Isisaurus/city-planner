@@ -21,6 +21,10 @@
   @apply px-2 md:px-6 py-3 border-2 border-transparent hover:border-black flex justify-between items-center gap-1 uppercase bg-white rounded-xl text-xs md:text-sm font-bold;
 }
 
+.message {
+  @apply py-10 font-light text-2xl flex items-center text-center gap-4 flex-col;
+}
+
 /* .portabletext {
 
 } */

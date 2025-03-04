@@ -4,6 +4,7 @@ import { client } from "@/sanity/lib/client";
 import { PROJECTS_SEARCH_QUERY } from "@/sanity/lib/queries";
 import { Project } from "@/sanity/types";
 import Form from "next/form";
+import Link from "next/link";
 
 export default async function ProjectsPage({
   searchParams,
@@ -64,7 +65,12 @@ export default async function ProjectsPage({
           {allProjects.length > 0 ? (
             <ProjectsTable initialProjects={allProjects} />
           ) : (
-            <p>No projects found for `{query}`</p>
+            <div className="message">
+              <p>No projects found for {`"${query}"`}.</p>
+              <Link className="button--white" href="/projects">
+                Reset Search
+              </Link>
+            </div>
           )}
         </div>
       </section>

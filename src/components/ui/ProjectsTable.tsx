@@ -97,14 +97,6 @@ export const ProjectsTable = ({
   };
 
   useEffect(() => {
-    setProjectsPool(initialProjects);
-    setStatusFilter(new Set());
-    setFilteredProjects(null);
-    getStatusOptions();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialProjects]);
-
-  useEffect(() => {
     if (statusFilter.size === 0) {
       setProjectsPool((prev) =>
         prev?.length === 1 ? prev : getSortedProjects(projectsPool),
@@ -130,6 +122,9 @@ export const ProjectsTable = ({
   }, [statusFilter]);
 
   useEffect(() => {
+    setProjectsPool(initialProjects);
+    getStatusOptions();
+    setStatusFilter(new Set());
     const handleClickOutside = (event: MouseEvent) => {
       if (
         dropdownRef.current &&
@@ -144,10 +139,12 @@ export const ProjectsTable = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialProjects]);
 
   return (
     <div className="bg-gradient-to-b from-cyan-50 via-gray-200/15 to-transparent rounded-3xl shadow-md md:px-2 pt-5 pb-10">
+      {/* filter navigation */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-2 px-2 md:px-6 pb-20">
         <p className="text-xl font-bold">Filter available projects</p>
         <div className="flex items-center gap-2 relative">
@@ -216,6 +213,8 @@ export const ProjectsTable = ({
           })}
         </div>
       </div>
+
+      {/* table */}
       <table className="w-full text-sm text-left text-black bg-transparent">
         <thead className="text-xs">
           <tr>
@@ -225,7 +224,7 @@ export const ProjectsTable = ({
                 <th
                   key={KEY}
                   scope="col"
-                  className="uppercase font-black px-2 md:px-6 py-3"
+                  className="uppercase font-black text-gray-600 px-2 md:px-6 py-3"
                 >
                   <span>{title}</span>
                 </th>

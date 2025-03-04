@@ -69,7 +69,12 @@ export default async function Home({
               <ProjectCard key={project._id} project={project} />
             ))
           ) : (
-            <p>No projects found</p>
+            <div className="message">
+              <p>No projects found for {`"${query}"`}.</p>
+              <Link className="button--white" href="/projects">
+                Reset Search
+              </Link>
+            </div>
           )}
         </ul>
         <div className="flex my-5">
