@@ -17,6 +17,9 @@
 .button--white {
   @apply rounded-full px-5 py-2 border border-transparent bg-white shadow-md hover:border hover:border-black cursor-pointer transition-all ease-in;
 }
+.button-filter {
+  @apply px-2 md:px-6 py-3 border-2 border-transparent hover:border-black flex justify-between items-center gap-1 uppercase bg-white rounded-xl text-xs md:text-sm font-bold;
+}
 
 /* .portabletext {
 

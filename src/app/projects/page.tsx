@@ -59,12 +59,10 @@ export default async function ProjectsPage({
           </div>
         </Form>
       </section>
-      <section className="container section">
+      <section className="container section my-8">
         <div>
           {allProjects.length > 0 ? (
-            <div className="my-20 bg-gradient-to-b from-cyan-50 via-gray-200/15 to-transparent rounded-3xl shadow-md md:px-2 pt-5 pb-10">
-              <ProjectsTable initialProjects={allProjects} />
-            </div>
+            <ProjectsTable initialProjects={allProjects} />
           ) : (
             <p>No projects found for `{query}`</p>
           )}
