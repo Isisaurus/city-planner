@@ -6,3 +6,4 @@ export * from "./ProjectCard";
 export * from "./VoteForm";
 export * from "./ProjectsTable";
 export * from "./StatusLabel";
+export * from "./MissionCards";

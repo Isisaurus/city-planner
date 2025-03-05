@@ -32,6 +32,21 @@
   writing-mode: vertical-lr;
   transform: rotate(180deg);
   text-orientation: sideways;
-  text-align: right;
-  text-orientation: sideways;
+}
+
+.mission-text {
+  ul {
+    @apply py-5;
+    li {
+      @apply list-disc list-inside;
+    }
+  }
+}
+.mission-text {
+  ol {
+    @apply py-5;
+    li {
+      @apply list-inside list-decimal;
+    }
+  }
 }
