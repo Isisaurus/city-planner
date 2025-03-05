@@ -144,7 +144,7 @@ export const ProjectsTable = ({
   }, [initialProjects]);
 
   return (
-    <div className="bg-gradient-to-b from-cyan-50 via-gray-200/15 to-transparent rounded-3xl shadow-md md:px-2 pt-5 pb-10">
+    <div className="bg-gradient-to-b from-cyan-50 via-gray-200/15 to-transparent rounded-3xl shadow-md md:px-2 pt-5 pb-10 animate-fade-up">
       {/* filter navigation */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-2 px-2 md:px-6 pb-20">
         <p className="text-xl font-bold">Filter available projects</p>
@@ -240,7 +240,10 @@ export const ProjectsTable = ({
             ? filteredProjects.map((project) => {
                 const { _id, title, _createdAt, status, votes, slug } = project;
                 return (
-                  <tr key={_id} className="border-b border-gray-200 font-light">
+                  <tr
+                    key={_id}
+                    className="border-b border-gray-200 font-light animate-fade"
+                  >
                     <th
                       scope="row"
                       className="px-2 md:px-6 py-4 font-medium md:whitespace-nowrap"
@@ -275,7 +278,10 @@ export const ProjectsTable = ({
             ? projectsPool.map((project) => {
                 const { _id, title, _createdAt, status, votes, slug } = project;
                 return (
-                  <tr key={_id} className="border-b border-gray-200 font-light">
+                  <tr
+                    key={_id}
+                    className="border-b border-gray-200 font-light animate-fade"
+                  >
                     <th
                       scope="row"
                       className="px-2 md:px-6 py-4 font-medium md:whitespace-nowrap"

@@ -22,11 +22,12 @@ export default async function ProjectsPage({
   return (
     <>
       <section className="container section py-5 rounded-3xl">
-        <div className="min-h-[15vh] flex flex-col gap-4 justify-center items-center text-center">
-          <h1 className="text-4xl md:text-4xl font-bold">Projects Overview</h1>
-          <p>
-            Browse all projects submitted, Lorem ipsum dolor, sit amet
-            consectetur adipisicing elit. Quia, rem.
+        <div className="flex flex-col gap-4">
+          <h1 className="text-6xl leading-[70px] font-medium">
+            Projects Overview
+          </h1>
+          <p className=" text-gray-700 font-medium tracking-wider">
+            All City Projects in One Place - Search, Filter & Stay Updated
           </p>
         </div>
       </section>
@@ -34,7 +35,7 @@ export default async function ProjectsPage({
         <Form
           action="/projects"
           scroll={false}
-          className="bg-white border-2 border-black rounded-full py-2 px-3 flex gap-1 my-4 mx-auto max-w-screen-md"
+          className="bg-white border-2 border-black rounded-full py-2 px-3 flex gap-1 my-4 max-w-screen-md"
           id="search-form"
         >
           <input

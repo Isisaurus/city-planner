@@ -39,7 +39,7 @@ export const MissionCards = () => {
   const [activeTab, setActiveTab] = useState<number>(missions[0].id);
 
   return (
-    <div className="flex flex-row rounded-l-[45px] gap-1 bg-white text-white divide-x-4 divide-white">
+    <div className="flex flex-row rounded-[45px] gap-1 bg-white text-white divide-x-4 divide-white shadow-2xl">
       <ul className="flex flex-col justify-between border-r-4" role="tablist">
         {missions.map((item) => {
           const { id } = item;

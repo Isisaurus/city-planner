@@ -22,13 +22,15 @@ export default async function Home({
   return (
     <>
       <section className="container section min-h-[50vh] bg-gradient-to-r from-gray-200 via-cyan-200 to-gray-200 rounded-3xl flex flex-col gap-4 items-center justify-center text-center text-black">
-        <h1 className="text-4xl md:text-6xl font-bold">
-          Lorem ipsum dolor <br /> sit amet consectetur.
-        </h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur
-          quidem expedita laboriosam ducimus magni!
-        </p>
+        <div className="animate-fade-up flex flex-col gap-4">
+          <h1 className="text-6xl leading-[70px] font-medium">
+            Open Planning. <br /> Active Citizens. Better Cities.
+          </h1>
+          <p className="text-gray-700 font-medium tracking-wider">
+            Stay informed about city projects, submit your ideas, and be part of
+            the change.
+          </p>
+        </div>
         <Form
           action="/"
           scroll={false}
