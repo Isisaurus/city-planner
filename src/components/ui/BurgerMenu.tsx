@@ -42,10 +42,10 @@ export const BurgerMenu = ({
       >
         <span className="text-black relative">
           <BarsArrowDown
-            className={`${isActive ? "animate-float-down opacity-0" : "animate-float-up opacity-100"} h-7 w-7 relative transition-all`}
+            className={`${isActive ? "opacity-0" : "animate-fade-down opacity-100"} h-7 w-7 relative`}
           />
           <BarsArrowUp
-            className={`${isActive ? "animate-float-up opacity-100" : "animate-float-down opacity-0"} absolute top-0 h-7 w-7 transition-all
+            className={`${isActive ? "animate-fade-up opacity-100" : "opacity-0"} absolute top-0 h-7 w-7
             `}
           />
         </span>

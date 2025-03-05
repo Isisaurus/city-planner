@@ -1,6 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "tailwindcss-animated";
 
 .container {
   @apply mx-auto max-w-screen-xl;
@@ -29,28 +28,10 @@
 
 } */
 
-@keyframes float-down {
-  0% {
-    @apply translate-y-0 opacity-100;
-  }
-
-  100% {
-    @apply translate-y-3 opacity-0;
-  }
-}
-@keyframes float-up {
-  0% {
-    @apply translate-y-3 opacity-0;
-  }
-
-  100% {
-    @apply translate-y-0 opacity-100;
-  }
-}
-
-.animate-float-down {
-  animation: float-down 0.3s ease-out;
-}
-.animate-float-up {
-  animation: float-up 0.3s ease-in;
+.text-vertical {
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  text-orientation: sideways;
+  text-align: right;
+  text-orientation: sideways;
 }

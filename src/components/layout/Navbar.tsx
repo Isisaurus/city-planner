@@ -15,8 +15,8 @@ export async function Navbar() {
       href: "/projects",
     },
     {
-      label: "City Card",
-      href: "/city-card",
+      label: "Our Mission",
+      href: "/our-mission",
     },
   ];
 
