@@ -1,13 +1,16 @@
 import { formatDate } from "@/lib/utils";
 import { client } from "@/sanity/lib/client";
-import { PROJECT_QUERY } from "@/sanity/lib/queries";
-import { Project } from "@/sanity/types";
+import { PROJECT_QUERY, PROJECTCOMMENTS_QUERY } from "@/sanity/lib/queries";
+import { Comment, Project } from "@/sanity/types";
 import { PortableText } from "@portabletext/react";
 import { auth } from "../../../../auth";
 import { VoteForm } from "@/components/ui";
 import { writeClient } from "@/sanity/lib/write-client";
-import { ArrowRight, Bolt } from "@/components/icons";
+import { ArrowRight, Bolt, ChatBubbleLeft } from "@/components/icons";
 import Link from "next/link";
+import Form from "next/form";
+import addCommentToProject from "@/lib/addCommentToProject";
+import { revalidatePath } from "next/cache";
 
 export const experimental_ppr = true;
 
@@ -22,7 +25,6 @@ export default async function ProjectPage({
   const projectRes: Project[] = await client.fetch(PROJECT_QUERY, queryParams, {
     useCdn: false,
   });
-
   const [project] = projectRes;
   const {
     title,
@@ -34,6 +36,17 @@ export default async function ProjectPage({
     votes,
     coverImage,
   } = project;
+
+  const comments: Comment[] = await client.fetch(
+    PROJECTCOMMENTS_QUERY,
+    {
+      projectId: _id,
+    },
+    {
+      useCdn: false,
+    },
+  );
+
   const handleVote = async () => {
     "use server";
     const res = await writeClient
@@ -91,6 +104,75 @@ export default async function ProjectPage({
         <div className="portabletext p-3 md:p-6 max-w-screen-md">
           {description && <PortableText value={description} />}
         </div>
+      </section>
+      <section>{/* gallery of images */}</section>
+      <section className="section container mb-10">
+        <div className="px-5 py-5 md:py-10 animate-fade">
+          <h1 className="text-3xl font-medium">Comments ({comments.length})</h1>
+          {session?.user ? (
+            <Form
+              action={async (formData) => {
+                "use server";
+                const commentText = formData.get("comment") as string;
+                if (!commentText || !session.user?.id) {
+                  return;
+                }
+                await addCommentToProject(_id, commentText, session?.user?.id);
+                revalidatePath(`/projects/${slug}`);
+              }}
+              className="my-5 flex flex-col gap-5 max-w-screen-md"
+            >
+              <div>
+                <label htmlFor="comment" className="sr-only">
+                  Your comment
+                </label>
+                <textarea
+                  required
+                  id="comment"
+                  name="comment"
+                  rows={3}
+                  className="px-5 py-3 w-full text-sm text-black border border-gray-700 bg-transparent rounded-md"
+                  placeholder="Leave a comment..."
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                className="button ml-auto flex items-center justify-center gap-1.5"
+              >
+                <span>Post comment</span>
+                <span className="bg-white rounded-full p-1 text-black">
+                  <ChatBubbleLeft className="size-6" />
+                </span>
+              </button>
+            </Form>
+          ) : null}
+          <div>
+            {comments.length > 0 ? (
+              <div className="flex flex-col gap-5 divide-y divide-gray-100 max-w-screen-md py-5">
+                {comments.map((item) => {
+                  const { _id, _createdAt, text } = item;
+
+                  return (
+                    <article
+                      key={_id}
+                      className="flex flex-col gap-5 py-5 px-3 animate-fade-up"
+                    >
+                      <p className="text-gray-800">{text}</p>
+
+                      <p className="ml-auto text-gray-600 font-light">
+                        {formatDate(_createdAt)}
+                      </p>
+                    </article>
+                  );
+                })}
+              </div>
+            ) : (
+              <p>No comments on this project yet.</p>
+            )}
+          </div>
+        </div>
+      </section>
+      <section className="section container">
         <div className="flex my-10">
           <Link
             href="/projects"
@@ -103,8 +185,6 @@ export default async function ProjectPage({
           </Link>
         </div>
       </section>
-      <section>{/* gallery of images */}</section>
-      <section>{/* comment section */}</section>
     </>
   );
 }

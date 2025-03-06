@@ -12,5 +12,16 @@ export const comment = defineType({
       name: "text",
       type: "string",
     }),
+    defineField({
+      title: "User ID",
+      name: "userid",
+      type: "string",
+    }),
+    defineField({
+      name: "projectRef",
+      title: "Project Reference",
+      type: "reference",
+      to: [{ type: "project" }],
+    }),
   ],
 });

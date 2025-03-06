@@ -1,5 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { ProjectsIcon } from "@sanity/icons";
+
 export const project = defineType({
   name: "project",
   title: "Project",
@@ -61,6 +62,12 @@ export const project = defineType({
       title: "Votes",
       type: "number",
       initialValue: () => 0,
+    }),
+    defineField({
+      name: "comments",
+      title: "Comments",
+      type: "array",
+      of: [{ type: "reference", to: { type: "comment" } }],
     }),
   ],
 });

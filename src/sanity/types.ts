@@ -201,3 +201,120 @@ export type AllSanitySchemaTypes =
   | Slug
   | User;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./src/sanity/lib/queries.ts
+// Variable: PROJECTS_SEARCH_QUERY
+// Query: *[  _type == "project" &&  (!defined($search) || title match $search || description match $search || summary match $search)]| order(_createdAt desc)
+export type PROJECTS_SEARCH_QUERYResult = Array<{
+  _id: string;
+  _type: "project";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  summary?: string;
+  status?: "appeal" | "completed" | "progress" | "review";
+  coverImage?: string;
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  votes?: number;
+}>;
+// Variable: PROJECTS_QUERY
+// Query: *[_type=='project'] | order(_createdAt desc)
+export type PROJECTS_QUERYResult = Array<{
+  _id: string;
+  _type: "project";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  summary?: string;
+  status?: "appeal" | "completed" | "progress" | "review";
+  coverImage?: string;
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  votes?: number;
+}>;
+// Variable: PROJECT_QUERY
+// Query: *[_type=='project' && slug.current == $slug]
+export type PROJECT_QUERYResult = Array<{
+  _id: string;
+  _type: "project";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  summary?: string;
+  status?: "appeal" | "completed" | "progress" | "review";
+  coverImage?: string;
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  votes?: number;
+}>;
+// Variable: PROJECTVOTES_QUERY
+// Query: *[_type=='project' && _id == $projectId]{_id, votes}
+export type PROJECTVOTES_QUERYResult = Array<{
+  _id: string;
+  votes: number | null;
+}>;
+
+// Query TypeMap
+import "@sanity/client";
+declare module "@sanity/client" {
+  interface SanityQueries {
+    '*[\n  _type == "project" &&\n  (!defined($search) || title match $search || description match $search || summary match $search)\n]\n| order(_createdAt desc)': PROJECTS_SEARCH_QUERYResult;
+    "*[_type=='project'] | order(_createdAt desc)": PROJECTS_QUERYResult;
+    "*[_type=='project' && slug.current == $slug]": PROJECT_QUERYResult;
+    "*[_type=='project' && _id == $projectId]{_id, votes}": PROJECTVOTES_QUERYResult;
+  }
+}

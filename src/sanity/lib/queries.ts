@@ -12,9 +12,13 @@ export const PROJECTS_QUERY = defineQuery(
 );
 
 export const PROJECT_QUERY = defineQuery(
-  `*[_type=='project' && slug.current == $slug]{_id, title, slug, _createdAt, summary, status, description, votes, _type, _updatedAt, _rev, coverImage}`,
+  `*[_type=='project' && slug.current == $slug]`,
 );
 
 export const PROJECTVOTES_QUERY = defineQuery(
   `*[_type=='project' && _id == $projectId]{_id, votes}`,
+);
+
+export const PROJECTCOMMENTS_QUERY = defineQuery(
+  `*[_type=='comment' && ($projectId match projectRef._ref)] | order(_createdAt desc)`,
 );

@@ -12,6 +12,7 @@ export * from "./Users";
 export * from "./PresentationChart";
 export * from "./Bolt";
 export * from "./LinkIcon";
+export * from "./ChatBubbleLeft";
 
 export interface IconProps {
   className?: string;
