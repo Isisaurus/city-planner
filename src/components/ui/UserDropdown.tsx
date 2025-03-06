@@ -3,6 +3,7 @@
 import { User } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 
 interface UserDropdownProps {
@@ -13,6 +14,8 @@ interface UserDropdownProps {
 export function UserDropdown({ handleLogout, user }: UserDropdownProps) {
   const [isActive, setIsActive] = useState(false);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const path = usePathname();
 
   const toggleDropdown = () => {
     setIsActive((prev) => !prev);
@@ -21,19 +24,15 @@ export function UserDropdown({ handleLogout, user }: UserDropdownProps) {
   const userDropdownLinks = [
     {
       label: "Profile",
-      location: `/profile/${user.id}`,
-    },
-    {
-      label: "Votes",
-      location: `/${user.id}/votes`,
+      location: `/profile`,
     },
     {
       label: "Submissions",
-      location: `/${user.id}/projects`,
+      location: `/profile?tab=submissions`,
     },
     {
-      label: "Saves",
-      location: `/${user.id}/saves`,
+      label: "Votes",
+      location: `/profile?tab=votes`,
     },
   ];
   const imageUrl = user.image;
@@ -42,7 +41,9 @@ export function UserDropdown({ handleLogout, user }: UserDropdownProps) {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         buttonRef.current &&
-        !buttonRef.current.contains(event.target as Node)
+        menuRef.current &&
+        !buttonRef.current.contains(event.target as Node) &&
+        !menuRef.current.contains(event.target as Node)
       ) {
         setIsActive(false);
       } else {
@@ -54,6 +55,10 @@ export function UserDropdown({ handleLogout, user }: UserDropdownProps) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    setIsActive(false);
+  }, [path]);
 
   return (
     <div>
@@ -79,6 +84,7 @@ export function UserDropdown({ handleLogout, user }: UserDropdownProps) {
         )}
       </button>
       <div
+        ref={menuRef}
         className={`absolute right-0 top-16 grid transition-all duration-300 ease-in-out overflow-hidden ${
           isActive
             ? "grid-rows-[1fr] opacity-100 z-50"
@@ -93,7 +99,9 @@ export function UserDropdown({ handleLogout, user }: UserDropdownProps) {
                 {user.email}
               </span>
               <form className="my-3" action={handleLogout}>
-                <button type="submit">Logout</button>
+                <button type="submit" className="button--white">
+                  Logout
+                </button>
               </form>
             </div>
             <ul className="text-base list-none py-3 flex flex-col gap-4">

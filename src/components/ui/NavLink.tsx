@@ -13,10 +13,11 @@ export const NavLink = ({
   const isActive = usePathname() === href;
 
   return (
-    <li
-      className={`block py-2 px-3 ${isActive ? "text-black" : "text-black/60"}`}
-    >
-      <Link href={href}>
+    <li className="flex">
+      <Link
+        href={href}
+        className={`block ${isActive ? "text-black font-semibold" : "text-black/60"} hover:text-black/80 hover:bg-gray-100 rounded-xl transition-all ease-in flex items-center justify-center flex-1 h-full py-2 px-3`}
+      >
         <span>{label}</span>
       </Link>
     </li>

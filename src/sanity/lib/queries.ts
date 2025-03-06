@@ -12,7 +12,7 @@ export const PROJECTS_QUERY = defineQuery(
 );
 
 export const PROJECT_QUERY = defineQuery(
-  `*[_type=='project' && slug.current == $slug]{_id, title, slug, _createdAt, summary, status, description, votes, _type, _updatedAt, _rev}`,
+  `*[_type=='project' && slug.current == $slug]{_id, title, slug, _createdAt, summary, status, description, votes, _type, _updatedAt, _rev, coverImage}`,
 );
 
 export const PROJECTVOTES_QUERY = defineQuery(

@@ -60,25 +60,26 @@ export default async function Home({
           </div>
         </Form>
       </section>
-      <section className="container section my-8">
-        <p className="text-2xl font-bold">
-          {query ? `Search results for "${query}"` : `Highlighted projects`}
+      <section className="container section my-10">
+        <p className="text-3xl font-medium pb-10">
+          {query
+            ? allProjects.length > 0
+              ? `Results for "${query}"`
+              : `No projects found for "${query}"`
+            : `Ongoing projects`}
         </p>
+        {allProjects.length === 0 && query ? (
+          <Link className="button text-base font-normal" href="/">
+            Reset Search
+          </Link>
+        ) : null}
 
         <ul className="mt-7 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-          {allProjects.length > 0 ? (
-            allProjects.map((project) => (
-              <ProjectCard key={project._id} project={project} />
-            ))
-          ) : (
-            <div className="message">
-              <p>No projects found for {`"${query}"`}.</p>
-              <Link className="button--white" href="/projects">
-                Reset Search
-              </Link>
-            </div>
-          )}
+          {allProjects.map((project) => (
+            <ProjectCard key={project._id} project={project} />
+          ))}
         </ul>
+
         <div className="flex my-5">
           <Link
             href="/projects"

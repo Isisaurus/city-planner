@@ -35,7 +35,7 @@ export async function Navbar() {
           </span>
           <span className="font-bold">City Planner</span>
         </Link>
-        <ul className="font-medium flex-1 justify-center invisible hidden md:flex md:visible">
+        <ul className="font-medium flex-1 justify-center invisible hidden md:flex md:visible gap-4">
           {navItems.map((navItem) => (
             <NavLink navItem={navItem} key={navItem.label} />
           ))}

@@ -1,11 +1,9 @@
 "use client";
-import { formatDate } from "@/lib/utils";
 import { Project } from "@/sanity/types";
-import Link from "next/link";
 import React, { useEffect, useState, useRef } from "react";
 import ChevronDown from "../icons/ChevronDown";
 import { Funnel } from "../icons";
-import StatusLabel from "./StatusLabel";
+import ProjectsTableRow from "./ProjectsTableRow";
 
 type TableHeaderType = {
   title: string;
@@ -155,6 +153,7 @@ export const ProjectsTable = ({
               return (
                 <div key={KEY} ref={dropdownRef}>
                   <button
+                    type="button"
                     onClick={() => setIsStatusDropdownOpen((prev) => !prev)}
                     className={`button-filter ${isStatusDropdownOpen ? "!border-black" : ""}`}
                   >
@@ -200,6 +199,7 @@ export const ProjectsTable = ({
               return (
                 <div key={KEY}>
                   <button
+                    type="button"
                     className={`button-filter ${KEY === sortCriteria.keyToSort ? "!border-black" : ""}`}
                     onClick={() => handleHeaderClick(tableHeader)}
                   >
@@ -238,78 +238,12 @@ export const ProjectsTable = ({
           filteredProjects &&
           filteredProjects.length > 0
             ? filteredProjects.map((project) => {
-                const { _id, title, _createdAt, status, votes, slug } = project;
-                return (
-                  <tr
-                    key={_id}
-                    className="border-b border-gray-200 font-light animate-fade"
-                  >
-                    <th
-                      scope="row"
-                      className="px-2 md:px-6 py-4 font-medium md:whitespace-nowrap"
-                    >
-                      <Link
-                        href={`projects/${slug?.current}`}
-                        className="hover:underline"
-                      >
-                        {title}
-                      </Link>
-                    </th>
-                    <td className="px-2 md:px-6 py-4">
-                      {formatDate(_createdAt)}
-                    </td>
-                    <td className="px-2 md:px-6 py-4 capitalize">
-                      <StatusLabel
-                        label={
-                          status as
-                            | "review"
-                            | "appeal"
-                            | "progress"
-                            | "completed"
-                        }
-                      />
-                    </td>
-                    <td className="px-2 md:px-6 py-4">{votes}</td>
-                  </tr>
-                );
+                return <ProjectsTableRow key={project._id} project={project} />;
               })
             : null}
           {statusFilter.size === 0 && projectsPool && projectsPool.length > 0
             ? projectsPool.map((project) => {
-                const { _id, title, _createdAt, status, votes, slug } = project;
-                return (
-                  <tr
-                    key={_id}
-                    className="border-b border-gray-200 font-light animate-fade"
-                  >
-                    <th
-                      scope="row"
-                      className="px-2 md:px-6 py-4 font-medium md:whitespace-nowrap"
-                    >
-                      <Link
-                        href={`projects/${slug?.current}`}
-                        className="hover:underline"
-                      >
-                        {title}
-                      </Link>
-                    </th>
-                    <td className="px-2 md:px-6 py-4">
-                      {formatDate(_createdAt)}
-                    </td>
-                    <td className="px-2 md:px-6 py-4 capitalize">
-                      <StatusLabel
-                        label={
-                          status as
-                            | "review"
-                            | "appeal"
-                            | "progress"
-                            | "completed"
-                        }
-                      />
-                    </td>
-                    <td className="px-2 md:px-6 py-4">{votes}</td>
-                  </tr>
-                );
+                return <ProjectsTableRow key={project._id} project={project} />;
               })
             : null}
         </tbody>
@@ -319,3 +253,5 @@ export const ProjectsTable = ({
 };
 
 export default ProjectsTable;
+
+// change date formatting

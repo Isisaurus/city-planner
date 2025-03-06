@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import BarsArrowDown from "../icons/BarsArrowDown";
 import { BarsArrowUp } from "../icons";
 import NavLink from "./NavLink";
+import { usePathname } from "next/navigation";
 
 export const BurgerMenu = ({
   navItems,
@@ -14,12 +15,16 @@ export const BurgerMenu = ({
     setIsActive((prev) => !prev);
   };
   const burgerButtonRef = useRef<HTMLButtonElement | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const path = usePathname();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         burgerButtonRef.current &&
-        !burgerButtonRef.current.contains(event.target as Node)
+        menuRef.current &&
+        !burgerButtonRef.current.contains(event.target as Node) &&
+        !menuRef.current.contains(event.target as Node)
       ) {
         setIsActive(false);
       } else {
@@ -31,6 +36,10 @@ export const BurgerMenu = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    setIsActive(false);
+  }, [path]);
 
   return (
     <>
@@ -51,6 +60,7 @@ export const BurgerMenu = ({
         </span>
       </button>
       <div
+        ref={menuRef}
         className={`max-w-screen-xl w-full absolute right-0 top-16 grid transition-all duration-300 ease-in-out overflow-hidden bg-white ${
           isActive
             ? "grid-rows-[1fr] opacity-100 z-100"

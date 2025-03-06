@@ -11,7 +11,7 @@ export const ProjectCard = ({ project }: { project: Project }) => {
     project;
 
   return (
-    <li id={_id}>
+    <li id={_id} className="animate-fade">
       <div className="flex flex-col max-w-sm bg-white rounded-xl shadow-md divide-y divide-gray-100">
         <div className="px-4 py-2">
           <div className="flex justify-between items-center mb-4">

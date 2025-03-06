@@ -24,9 +24,11 @@
   @apply py-10 font-light text-2xl flex items-center text-center gap-4 flex-col;
 }
 
-/* .portabletext {
-
-} */
+.portabletext {
+  p {
+    @apply py-5 leading-7;
+  }
+}
 
 .text-vertical {
   writing-mode: vertical-lr;
@@ -34,19 +36,27 @@
   text-orientation: sideways;
 }
 
-.mission-text {
+.mission-text,
+.portabletext {
   ul {
     @apply py-5;
     li {
-      @apply list-disc list-inside;
+      @apply list-disc list-inside leading-7;
     }
   }
 }
-.mission-text {
+.mission-text,
+.portabletext {
   ol {
     @apply py-5;
     li {
-      @apply list-inside list-decimal;
+      @apply list-inside list-decimal leading-7;
     }
   }
+}
+
+button[type="button"],
+button[type="submit"],
+button[type="reset"] {
+  @apply cursor-pointer;
 }

@@ -68,7 +68,7 @@ export default async function ProjectsPage({
           ) : (
             <div className="message">
               <p>No projects found for {`"${query}"`}.</p>
-              <Link className="button--white" href="/projects">
+              <Link className="button text-base font-normal" href="/projects">
                 Reset Search
               </Link>
             </div>
