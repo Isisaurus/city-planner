@@ -1,7 +1,7 @@
 import React from "react";
 
 type StatusLabelProps = {
-  label: "review" | "appeal" | "progress" | "completed";
+  label: "review" | "appeal" | "progress" | "completed" | "evaluation";
 };
 
 export const StatusLabel = ({ label }: StatusLabelProps) => {
@@ -27,7 +27,7 @@ export const StatusLabel = ({ label }: StatusLabelProps) => {
 
   return (
     <p
-      className={`px-2 py-1 font-black text-xs md:text-sm capitalize rounded-md ${customClass} text-center max-w-[100px]`}
+      className={`px-2 py-1 font-black text-xs md:text-sm capitalize rounded-md ${customClass} text-center max-w-[110px]`}
     >
       <span>
         {label === "completed" ? "" : "in"} {label}

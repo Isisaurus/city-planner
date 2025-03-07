@@ -7,3 +7,6 @@ export * from "./VoteForm";
 export * from "./ProjectsTable";
 export * from "./StatusLabel";
 export * from "./MissionCards";
+export * from "./ActivitiesTab";
+export * from "./SavesTab";
+export * from "./SubmissionsTab";

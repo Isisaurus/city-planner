@@ -23,6 +23,12 @@ export const project = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "author",
+      title: "author",
+      type: "string",
+      initialValue: "City Hall",
+    }),
+    defineField({
       name: "summary",
       title: "Summary",
       type: "string",
@@ -38,10 +44,10 @@ export const project = defineType({
           { title: "In Appeal", value: "appeal" },
           { title: "In Progress", value: "progress" },
           { title: "Completed", value: "completed" },
+          { title: "Under Evaluation", value: "evaluation" },
         ],
         layout: "radio",
       },
-      initialValue: "notStarted",
       validation: (Rule) => Rule.required(),
     }),
     defineField({

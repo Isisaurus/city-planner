@@ -24,7 +24,14 @@ const ProjectsTableRow = ({ project }: { project: Project }) => {
       <td className="px-2 md:px-6 py-4">{formatDate(_createdAt)}</td>
       <td className="px-2 md:px-6 py-4 capitalize">
         <StatusLabel
-          label={status as "review" | "appeal" | "progress" | "completed"}
+          label={
+            status as
+              | "review"
+              | "appeal"
+              | "progress"
+              | "completed"
+              | "evaluation"
+          }
         />
       </td>
       <td className="px-2 md:px-6 py-4">{votes}</td>

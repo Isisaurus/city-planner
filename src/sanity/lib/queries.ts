@@ -2,13 +2,13 @@ import { defineQuery } from "next-sanity";
 
 export const PROJECTS_SEARCH_QUERY = defineQuery(
   `*[
-  _type == "project" &&
+  _type == "project" && status != "evaluation" &&
   (!defined($search) || title match $search || description match $search || summary match $search)
 ]
 | order(_createdAt desc)`,
 );
 export const PROJECTS_QUERY = defineQuery(
-  `*[_type=='project'] | order(_createdAt desc)`,
+  `*[_type=='project' && status != "evaluation"] | order(_createdAt desc)`,
 );
 
 export const PROJECT_QUERY = defineQuery(
@@ -31,3 +31,7 @@ export const ACTIVITYPERUSERID_QUERY = defineQuery(`
     title
   }
 }`);
+
+export const PROJECTPERUSERID_QUERY = defineQuery(
+  `*[_type=='project' && ($userId match author)] | order(_createdAt desc)`,
+);

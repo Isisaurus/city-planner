@@ -2,10 +2,13 @@
 import Link from "next/link";
 import { auth } from "../../../auth";
 import Form from "next/form";
-import { ACTIVITYPERUSERID_QUERYResult } from "@/sanity/types";
+import { ACTIVITYPERUSERID_QUERYResult, Project } from "@/sanity/types";
 import { client } from "@/sanity/lib/client";
-import { ACTIVITYPERUSERID_QUERY } from "@/sanity/lib/queries";
-import { formatDate } from "@/lib/utils";
+import {
+  ACTIVITYPERUSERID_QUERY,
+  PROJECTPERUSERID_QUERY,
+} from "@/sanity/lib/queries";
+import { ActivitiesTab, SavesTab, SubmissionsTab } from "@/components/ui";
 
 export default async function ProfilePage({
   searchParams,
@@ -15,19 +18,30 @@ export default async function ProfilePage({
   const session = await auth();
   const { tab: currentTab } = await searchParams;
 
-  const tabs: { title: string; query: string | undefined }[] = [
-    { title: "activity", query: undefined },
-    { title: "saves", query: "saves" },
-    { title: "submissions", query: "submissions" },
-  ];
+  const [activities, submissions]: [ACTIVITYPERUSERID_QUERYResult, Project[]] =
+    await Promise.all([
+      client.fetch(
+        ACTIVITYPERUSERID_QUERY,
+        { id: session?.user?.id || "" },
+        { useCdn: false },
+      ),
+      client.fetch(
+        PROJECTPERUSERID_QUERY,
+        { userId: session?.user?.id },
+        { useCdn: false },
+      ),
+    ]);
 
-  const [activities]: [ACTIVITYPERUSERID_QUERYResult] = await Promise.all([
-    client.fetch(
-      ACTIVITYPERUSERID_QUERY,
-      { id: session?.user?.id || "" },
-      { useCdn: false },
-    ),
-  ]);
+  const tabs: { title: string; query: string | undefined; counter: number }[] =
+    [
+      { title: "activity", query: undefined, counter: activities.length },
+      { title: "saves", query: "saves", counter: 0 },
+      {
+        title: "submissions",
+        query: "submissions",
+        counter: submissions.length,
+      },
+    ];
 
   if (!session?.user) {
     return (
@@ -68,14 +82,15 @@ export default async function ProfilePage({
         <div className="font-medium text-center capitalize text-gray-500 border-b border-gray-200">
           <ul className="flex flex-wrap -mb-px">
             {tabs.map((tab) => {
-              const { title, query } = tab;
+              const { title, query, counter } = tab;
               return (
                 <li key={title} className="me-2">
                   <Link
                     href={query ? `/profile?tab=${query}` : "/profile"}
-                    className={`p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-800 hover:border-gray-300 block ${currentTab === query ? "text-black !border-black" : ""}`}
+                    className={`p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-800 hover:border-gray-300 block ${currentTab === query ? "text-black !border-black" : ""} flex items-center gap-2`}
                   >
-                    {title}
+                    <span>{title}</span>
+                    <span>{`(${counter})`}</span>
                   </Link>
                 </li>
               );
@@ -84,26 +99,15 @@ export default async function ProfilePage({
         </div>
       </section>
       <section className="section container">
-        {activities.length > 0 ? (
-          <div>
-            <ul className="flex flex-col gap-4">
-              {activities.map((item) => {
-                const { _createdAt, activityType, projectRef, _id } = item;
-
-                return (
-                  <li key={_id}>
-                    <p>
-                      Activity of {activityType} on project {projectRef?.title}.
-                    </p>
-                    <p>{formatDate(_createdAt)}</p>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        ) : (
-          ""
-        )}
+        <ActivitiesTab activities={activities} isCurrentTab={!currentTab} />
+        <SavesTab
+          activities={activities}
+          isCurrentTab={currentTab === "saves"}
+        />
+        <SubmissionsTab
+          submissions={submissions}
+          isCurrentTab={currentTab === "submissions"}
+        />
       </section>
     </>
   );

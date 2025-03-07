@@ -892,6 +892,13 @@
         },
         "optional": true
       },
+      "author": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "summary": {
         "type": "objectAttribute",
         "value": {
@@ -919,6 +926,10 @@
             {
               "type": "string",
               "value": "completed"
+            },
+            {
+              "type": "string",
+              "value": "evaluation"
             }
           ]
         },

@@ -165,8 +165,9 @@ export type Project = {
   _rev: string;
   title?: string;
   slug?: Slug;
+  author?: string;
   summary?: string;
-  status?: "review" | "appeal" | "progress" | "completed";
+  status?: "review" | "appeal" | "progress" | "completed" | "evaluation";
   coverImage?: string;
   description?: Array<{
     children?: Array<{
@@ -219,7 +220,7 @@ export type AllSanitySchemaTypes =
   | Slug;
 export declare const internalGroqTy; // Source: ./src/sanity/lib/queries.ts
 // Variable: PROJECTS_SEARCH_QUERY
-// Query: *[  _type == "project" &&  (!defined($search) || title match $search || description match $search || summary match $search)]| order(_createdAt desc)
+// Query: *[  _type == "project" && status != "evaluation" &&  (!defined($search) || title match $search || description match $search || summary match $search)]| order(_createdAt desc)
 export type PROJECTS_SEARCH_QUERYResult = Array<{
   _id: string;
   _type: "project";
@@ -228,8 +229,9 @@ export type PROJECTS_SEARCH_QUERYResult = Array<{
   _rev: string;
   title?: string;
   slug?: Slug;
+  author?: string;
   summary?: string;
-  status?: "appeal" | "completed" | "progress" | "review";
+  status?: "appeal" | "completed" | "evaluation" | "progress" | "review";
   coverImage?: string;
   description?: Array<{
     children?: Array<{
@@ -259,7 +261,7 @@ export type PROJECTS_SEARCH_QUERYResult = Array<{
   }>;
 }>;
 // Variable: PROJECTS_QUERY
-// Query: *[_type=='project'] | order(_createdAt desc)
+// Query: *[_type=='project' && status != "evaluation"] | order(_createdAt desc)
 export type PROJECTS_QUERYResult = Array<{
   _id: string;
   _type: "project";
@@ -268,8 +270,9 @@ export type PROJECTS_QUERYResult = Array<{
   _rev: string;
   title?: string;
   slug?: Slug;
+  author?: string;
   summary?: string;
-  status?: "appeal" | "completed" | "progress" | "review";
+  status?: "appeal" | "completed" | "evaluation" | "progress" | "review";
   coverImage?: string;
   description?: Array<{
     children?: Array<{
@@ -308,8 +311,9 @@ export type PROJECT_QUERYResult = Array<{
   _rev: string;
   title?: string;
   slug?: Slug;
+  author?: string;
   summary?: string;
-  status?: "appeal" | "completed" | "progress" | "review";
+  status?: "appeal" | "completed" | "evaluation" | "progress" | "review";
   coverImage?: string;
   description?: Array<{
     children?: Array<{
@@ -362,7 +366,7 @@ export type PROJECTCOMMENTS_QUERYResult = Array<{
   };
 }>;
 // Variable: ACTIVITYPERUSERID_QUERY
-// Query: *[_type=='userActivity' && ($id match userId)]{  ...,  projectRef -> {    slug,    title  }}
+// Query: *[_type=='userActivity' && ($id match userId)] | order(_createdAt desc){  ...,  projectRef -> {    slug,    title  }}
 export type ACTIVITYPERUSERID_QUERYResult = Array<{
   _id: string;
   _type: "userActivity";
@@ -376,3 +380,58 @@ export type ACTIVITYPERUSERID_QUERYResult = Array<{
     title: string | null;
   } | null;
 }>;
+// Variable: PROJECTPERUSERID_QUERY
+// Query: *[_type=='project' && ($userId match author)] | order(_createdAt desc)
+export type PROJECTPERUSERID_QUERYResult = Array<{
+  _id: string;
+  _type: "project";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  author?: string;
+  summary?: string;
+  status?: "appeal" | "completed" | "evaluation" | "progress" | "review";
+  coverImage?: string;
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  votes?: number;
+  comments?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "comment";
+  }>;
+}>;
+
+// Query TypeMap
+import "@sanity/client";
+declare module "@sanity/client" {
+  interface SanityQueries {
+    '*[\n  _type == "project" && status != "evaluation" &&\n  (!defined($search) || title match $search || description match $search || summary match $search)\n]\n| order(_createdAt desc)': PROJECTS_SEARCH_QUERYResult;
+    "*[_type=='project' && status != \"evaluation\"] | order(_createdAt desc)": PROJECTS_QUERYResult;
+    "*[_type=='project' && slug.current == $slug]": PROJECT_QUERYResult;
+    "*[_type=='project' && _id == $projectId]{_id, votes}": PROJECTVOTES_QUERYResult;
+    "*[_type=='comment' && ($projectId match projectRef._ref)] | order(_createdAt desc)": PROJECTCOMMENTS_QUERYResult;
+    "\n  *[_type=='userActivity' && ($id match userId)] | order(_createdAt desc){\n  ...,\n  projectRef -> {\n    slug,\n    title\n  }\n}": ACTIVITYPERUSERID_QUERYResult;
+    "*[_type=='project' && ($userId match author)] | order(_createdAt desc)": PROJECTPERUSERID_QUERYResult;
+  }
+}

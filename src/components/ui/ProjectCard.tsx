@@ -7,8 +7,17 @@ import { formatDate } from "@/lib/utils";
 import StatusLabel from "./StatusLabel";
 
 export const ProjectCard = ({ project }: { project: Project }) => {
-  const { _createdAt, slug, _id, summary, status, title, votes, coverImage } =
-    project;
+  const {
+    _createdAt,
+    slug,
+    _id,
+    summary,
+    status,
+    title,
+    votes,
+    coverImage,
+    author,
+  } = project;
 
   return (
     <li id={_id} className="animate-fade">
@@ -16,7 +25,14 @@ export const ProjectCard = ({ project }: { project: Project }) => {
         <div className="px-4 py-2">
           <div className="flex justify-between items-center mb-4">
             <StatusLabel
-              label={status as "review" | "appeal" | "progress" | "completed"}
+              label={
+                status as
+                  | "review"
+                  | "appeal"
+                  | "progress"
+                  | "completed"
+                  | "evaluation"
+              }
             />
             <div className="flex gap-1.5 font-black text-neutral-500">
               <ThumbsUp className="size-6" />
@@ -35,7 +51,7 @@ export const ProjectCard = ({ project }: { project: Project }) => {
 
           <div className="text-sm flex items-center justify-between my-2">
             <p>{formatDate(_createdAt)}</p>
-            <p>by City Hall</p>
+            <p>by {author}</p>
           </div>
         </div>
 
