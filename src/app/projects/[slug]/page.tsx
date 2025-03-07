@@ -11,6 +11,7 @@ import Link from "next/link";
 import Form from "next/form";
 import addCommentToProject from "@/lib/addCommentToProject";
 import { revalidatePath } from "next/cache";
+import createUserActivity from "@/lib/createUserActivity";
 
 export const experimental_ppr = true;
 
@@ -49,20 +50,44 @@ export default async function ProjectPage({
 
   const handleVote = async () => {
     "use server";
-    const res = await writeClient
-      .patch(_id)
-      .set({ votes: (votes || 0) + 1 })
-      .commit({ returnDocuments: true });
+    if (!session?.user?.id) {
+      return;
+    }
+    const [res] = await Promise.all([
+      writeClient
+        .patch(_id)
+        .set({ votes: (votes || 0) + 1 })
+        .commit({ returnDocuments: true }),
+      createUserActivity({
+        userId: session.user.id,
+        activityType: "vote",
+        projectRef: {
+          _ref: _id,
+        },
+      }),
+    ]);
 
     return res.votes;
   };
 
   const handleUnvote = async () => {
     "use server";
-    const res = await writeClient
-      .patch(_id)
-      .set({ votes: (votes || 0) - 1 })
-      .commit({ returnDocuments: true });
+    if (!session?.user?.id) {
+      return;
+    }
+    const [res] = await Promise.all([
+      writeClient
+        .patch(_id)
+        .set({ votes: (votes || 0) - 1 })
+        .commit({ returnDocuments: true }),
+      createUserActivity({
+        userId: session.user.id,
+        activityType: "unvote",
+        projectRef: {
+          _ref: _id,
+        },
+      }),
+    ]);
 
     return res.votes;
   };
@@ -117,7 +142,16 @@ export default async function ProjectPage({
                 if (!commentText || !session.user?.id) {
                   return;
                 }
-                await addCommentToProject(_id, commentText, session?.user?.id);
+                await Promise.all([
+                  addCommentToProject(_id, commentText, session?.user?.id),
+                  createUserActivity({
+                    userId: session.user.id,
+                    activityType: "comment",
+                    projectRef: {
+                      _ref: _id,
+                    },
+                  }),
+                ]);
                 revalidatePath(`/projects/${slug}`);
               }}
               className="my-5 flex flex-col gap-5 max-w-screen-md"

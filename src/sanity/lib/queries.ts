@@ -22,3 +22,12 @@ export const PROJECTVOTES_QUERY = defineQuery(
 export const PROJECTCOMMENTS_QUERY = defineQuery(
   `*[_type=='comment' && ($projectId match projectRef._ref)] | order(_createdAt desc)`,
 );
+
+export const ACTIVITYPERUSERID_QUERY = defineQuery(`
+  *[_type=='userActivity' && ($id match userId)] | order(_createdAt desc){
+  ...,
+  projectRef -> {
+    slug,
+    title
+  }
+}`);

@@ -141,6 +141,22 @@ export type Comment = {
   };
 };
 
+export type UserActivity = {
+  _id: string;
+  _type: "userActivity";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  userId?: string;
+  activityType?: "save" | "vote" | "unvote" | "comment";
+  projectRef?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "project";
+  };
+};
+
 export type Project = {
   _id: string;
   _type: "project";
@@ -186,19 +202,6 @@ export type Slug = {
   source?: string;
 };
 
-export type User = {
-  _id: string;
-  _type: "user";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  id?: number;
-  name?: string;
-  username?: string;
-  email?: string;
-  avatar?: string;
-};
-
 export type AllSanitySchemaTypes =
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -211,9 +214,9 @@ export type AllSanitySchemaTypes =
   | Geopoint
   | SanityAssetSourceData
   | Comment
+  | UserActivity
   | Project
-  | Slug
-  | User;
+  | Slug;
 export declare const internalGroqTy; // Source: ./src/sanity/lib/queries.ts
 // Variable: PROJECTS_SEARCH_QUERY
 // Query: *[  _type == "project" &&  (!defined($search) || title match $search || description match $search || summary match $search)]| order(_createdAt desc)
@@ -358,15 +361,18 @@ export type PROJECTCOMMENTS_QUERYResult = Array<{
     [internalGroqTypeReferenceTo]?: "project";
   };
 }>;
-
-// Query TypeMap
-import "@sanity/client";
-declare module "@sanity/client" {
-  interface SanityQueries {
-    '*[\n  _type == "project" &&\n  (!defined($search) || title match $search || description match $search || summary match $search)\n]\n| order(_createdAt desc)': PROJECTS_SEARCH_QUERYResult;
-    "*[_type=='project'] | order(_createdAt desc)": PROJECTS_QUERYResult;
-    "*[_type=='project' && slug.current == $slug]": PROJECT_QUERYResult;
-    "*[_type=='project' && _id == $projectId]{_id, votes}": PROJECTVOTES_QUERYResult;
-    "*[_type=='comment' && ($projectId match projectRef._ref)] | order(_createdAt desc)": PROJECTCOMMENTS_QUERYResult;
-  }
-}
+// Variable: ACTIVITYPERUSERID_QUERY
+// Query: *[_type=='userActivity' && ($id match userId)]{  ...,  projectRef -> {    slug,    title  }}
+export type ACTIVITYPERUSERID_QUERYResult = Array<{
+  _id: string;
+  _type: "userActivity";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  userId?: string;
+  activityType?: "comment" | "save" | "unvote" | "vote";
+  projectRef: {
+    slug: Slug | null;
+    title: string | null;
+  } | null;
+}>;
