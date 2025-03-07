@@ -22,13 +22,11 @@ Users
 
 - Can browse city projects, timelines, and updates;
 - Can view community discussions and votes (read-only);
-- Can apply for a city card (registration required);
 
 Verified users
 
 - Can vote and comment on project ideas;
 - Can submit their own project ideas and track their status;
-- Receive notifications about updates on their submitted ideas or projects they are following;
 
 Administrators (City Planners/Officials)
 
@@ -42,8 +40,7 @@ Administrators (City Planners/Officials)
 1. User Authentication and Verification
 
 - Google OAuth for easy sign-up and sign-in;
-- City Card verification process to unlock voting, commenting, and idea submission features;
-- Admin dashboard for user management and city card verification;
+- after verification voting, commenting, and idea submission features are unlocked;
 
 2. Project Management
 
@@ -67,24 +64,6 @@ Administrators (City Planners/Officials)
 - Idea Status Tracking: Users can track the status of their ideas (e.g., Submitted, Under Review, Approved, Rejected, In Progress);
 - Admin Feedback: Administrators can provide feedback, ask for clarifications, or give reasons for rejection;
 
-4. City Card Registration and Verification:
-
-- City Card Application: Users can apply for a city card by entering their address and uploading proof of residence;
-- Digital City Card: Once verified, users receive a digital city card that they can use to get discounts on services and events in the city;
-
-5. Notifications and Updates:
-
-- Email and in-app notifications for:
-  - Project updates or milestone completions;
-  - Status changes on submitted ideas;
-  - Replies to comments or community discussions;
-  - Approval or rejection of City Card applications;
-
-6. Administrative Dashboard:
-
-- Review and moderate submitted ideas and comments;
-- Post official city projects and updates;
-- Create and edit project timelines;
 
 # Installation
 
@@ -117,3 +96,4 @@ npm run prettier-watch
 - [Sanity](https://www.sanity.io/) as data serving and management;
 - [Sanity Typegen](https://www.sanity.io/docs/sanity-typegen), which is a new tool to generate TypeScript types from Sanity GROQ queries and schema definitions;
   - To regenerate typed from schemas, run ```npx sanity@latest typegen generate```
+- [Sentry](https://sentry.io) is implemented for monitoring the app and accepting user bug reports;

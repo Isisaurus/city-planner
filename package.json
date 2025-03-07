@@ -15,6 +15,7 @@
   "dependencies": {
     "@portabletext/react": "^3.2.1",
     "@sanity/vision": "^3.77.2",
+    "@sentry/nextjs": "^9.5.0",
     "@tailwindcss/postcss": "^4.0.9",
     "next": "15.1.7",
     "next-auth": "^5.0.0-beta.25",

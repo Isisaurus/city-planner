@@ -132,6 +132,13 @@ export type Comment = {
   _updatedAt: string;
   _rev: string;
   text?: string;
+  userid?: string;
+  projectRef?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "project";
+  };
 };
 
 export type Project = {
@@ -164,6 +171,13 @@ export type Project = {
     _key: string;
   }>;
   votes?: number;
+  comments?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "comment";
+  }>;
 };
 
 export type Slug = {
@@ -200,8 +214,7 @@ export type AllSanitySchemaTypes =
   | Project
   | Slug
   | User;
-export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: ./src/sanity/lib/queries.ts
+export declare const internalGroqTy; // Source: ./src/sanity/lib/queries.ts
 // Variable: PROJECTS_SEARCH_QUERY
 // Query: *[  _type == "project" &&  (!defined($search) || title match $search || description match $search || summary match $search)]| order(_createdAt desc)
 export type PROJECTS_SEARCH_QUERYResult = Array<{
@@ -234,6 +247,13 @@ export type PROJECTS_SEARCH_QUERYResult = Array<{
     _key: string;
   }>;
   votes?: number;
+  comments?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "comment";
+  }>;
 }>;
 // Variable: PROJECTS_QUERY
 // Query: *[_type=='project'] | order(_createdAt desc)
@@ -267,6 +287,13 @@ export type PROJECTS_QUERYResult = Array<{
     _key: string;
   }>;
   votes?: number;
+  comments?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "comment";
+  }>;
 }>;
 // Variable: PROJECT_QUERY
 // Query: *[_type=='project' && slug.current == $slug]
@@ -300,12 +327,36 @@ export type PROJECT_QUERYResult = Array<{
     _key: string;
   }>;
   votes?: number;
+  comments?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "comment";
+  }>;
 }>;
 // Variable: PROJECTVOTES_QUERY
 // Query: *[_type=='project' && _id == $projectId]{_id, votes}
 export type PROJECTVOTES_QUERYResult = Array<{
   _id: string;
   votes: number | null;
+}>;
+// Variable: PROJECTCOMMENTS_QUERY
+// Query: *[_type=='comment' && ($projectId match projectRef._ref)] | order(_createdAt desc)
+export type PROJECTCOMMENTS_QUERYResult = Array<{
+  _id: string;
+  _type: "comment";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  text?: string;
+  userid?: string;
+  projectRef?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "project";
+  };
 }>;
 
 // Query TypeMap
@@ -316,5 +367,6 @@ declare module "@sanity/client" {
     "*[_type=='project'] | order(_createdAt desc)": PROJECTS_QUERYResult;
     "*[_type=='project' && slug.current == $slug]": PROJECT_QUERYResult;
     "*[_type=='project' && _id == $projectId]{_id, votes}": PROJECTVOTES_QUERYResult;
+    "*[_type=='comment' && ($projectId match projectRef._ref)] | order(_createdAt desc)": PROJECTCOMMENTS_QUERYResult;
   }
 }
