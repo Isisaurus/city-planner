@@ -32,6 +32,15 @@ export const ACTIVITYPERUSERID_QUERY = defineQuery(`
   }
 }`);
 
+export const AVTIVITY_QUERY = defineQuery(`
+  *[_type=='userActivity' && ($id match userId) && ($projectRef match projectRef)] | order(_createdAt desc){
+  ...,
+  projectRef -> {
+    slug,
+    title
+  }
+}`);
+
 export const PROJECTPERUSERID_QUERY = defineQuery(
   `*[_type=='project' && ($userId match author)] | order(_createdAt desc)`,
 );

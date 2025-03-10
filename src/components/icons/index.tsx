@@ -13,6 +13,8 @@ export * from "./PresentationChart";
 export * from "./Bolt";
 export * from "./LinkIcon";
 export * from "./ChatBubbleLeft";
+export * from "./SaveIcon";
+export * from "./SaveIconFill";
 
 export interface IconProps {
   className?: string;

@@ -4,7 +4,7 @@ import { PROJECT_QUERY, PROJECTCOMMENTS_QUERY } from "@/sanity/lib/queries";
 import { Comment, Project } from "@/sanity/types";
 import { PortableText } from "@portabletext/react";
 import { auth } from "../../../../auth";
-import { VoteForm } from "@/components/ui";
+import { SaveForm, VoteForm } from "@/components/ui";
 import { writeClient } from "@/sanity/lib/write-client";
 import { ArrowRight, Bolt, ChatBubbleLeft } from "@/components/icons";
 import Link from "next/link";
@@ -92,6 +92,21 @@ export default async function ProjectPage({
     return res.votes;
   };
 
+  const handleSave = async () => {
+    "use server";
+    if (!session?.user?.id) {
+      return;
+    } else {
+      createUserActivity({
+        userId: session.user.id,
+        activityType: "save",
+        projectRef: {
+          _ref: _id,
+        },
+      });
+    }
+  };
+
   return (
     <>
       <section className="section container p-10">
@@ -104,12 +119,15 @@ export default async function ProjectPage({
           </div>
           <p>{formatDate(_createdAt)}</p>
           {session && session?.user ? (
-            <VoteForm
-              handleVote={handleVote}
-              handleUnvote={handleUnvote}
-              projectId={_id}
-              initVotes={votes || 0}
-            />
+            <div className="ml-auto flex gap-6 items-center">
+              <VoteForm
+                handleVote={handleVote}
+                handleUnvote={handleUnvote}
+                projectId={_id}
+                initVotes={votes || 0}
+              />
+              <SaveForm handleSave={handleSave} />
+            </div>
           ) : null}
         </div>
       </section>

@@ -1,7 +1,7 @@
 import { formatDate } from "@/lib/utils";
 import { ACTIVITYPERUSERID_QUERYResult } from "@/sanity/types";
 import React from "react";
-import { ChatBubbleLeft, LinkIcon, ThumbsUp } from "../icons";
+import { ChatBubbleLeft, LinkIcon, SaveIcon, ThumbsUp } from "../icons";
 import Link from "next/link";
 
 export const ActivitiesTab = ({
@@ -35,6 +35,7 @@ export const ActivitiesTab = ({
                     {activityType === "unvote" && (
                       <ThumbsUp className="size-6 -scale-y-100" />
                     )}
+                    {activityType === "save" && <SaveIcon className="size-6" />}
                   </span>
                   <span>
                     <span className="capitalize">{activityType} </span>on

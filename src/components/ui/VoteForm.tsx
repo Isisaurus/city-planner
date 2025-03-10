@@ -23,7 +23,7 @@ export const VoteForm = ({
   };
 
   return (
-    <div className="flex gap-3 items-center ml-auto">
+    <div className="flex gap-3 items-center">
       <p className="font-bold text-neutral-500">
         {isLoading ? "..." : voteCount}
       </p>

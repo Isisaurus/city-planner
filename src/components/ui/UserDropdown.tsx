@@ -27,12 +27,12 @@ export function UserDropdown({ handleLogout, user }: UserDropdownProps) {
       location: `/profile`,
     },
     {
-      label: "Submissions",
-      location: `/profile?tab=submissions`,
+      label: "Saves",
+      location: `/profile?tab=saves`,
     },
     {
-      label: "Votes",
-      location: `/profile?tab=votes`,
+      label: "Submissions",
+      location: `/profile?tab=submissions`,
     },
   ];
   const imageUrl = user.image;

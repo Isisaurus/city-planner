@@ -35,7 +35,11 @@ export default async function ProfilePage({
   const tabs: { title: string; query: string | undefined; counter: number }[] =
     [
       { title: "activity", query: undefined, counter: activities.length },
-      { title: "saves", query: "saves", counter: 0 },
+      {
+        title: "saves",
+        query: "saves",
+        counter: activities.filter((el) => "save" === el.activityType).length,
+      },
       {
         title: "submissions",
         query: "submissions",
