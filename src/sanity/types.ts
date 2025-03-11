@@ -436,3 +436,18 @@ export type PROJECTPERUSERID_QUERYResult = Array<{
     [internalGroqTypeReferenceTo]?: "comment";
   }>;
 }>;
+
+// Query TypeMap
+import "@sanity/client";
+declare module "@sanity/client" {
+  interface SanityQueries {
+    '*[\n  _type == "project" && status != "evaluation" &&\n  (!defined($search) || title match $search || description match $search || summary match $search)\n]\n| order(_createdAt desc)': PROJECTS_SEARCH_QUERYResult;
+    "*[_type=='project' && status != \"evaluation\"] | order(_createdAt desc)": PROJECTS_QUERYResult;
+    "*[_type=='project' && slug.current == $slug]": PROJECT_QUERYResult;
+    "*[_type=='project' && _id == $projectId]{_id, votes}": PROJECTVOTES_QUERYResult;
+    "*[_type=='comment' && ($projectId match projectRef._ref)] | order(_createdAt desc)": PROJECTCOMMENTS_QUERYResult;
+    "\n  *[_type=='userActivity' && ($id match userId)] | order(_createdAt desc){\n  ...,\n  projectRef -> {\n    slug,\n    title\n  }\n}": ACTIVITYPERUSERID_QUERYResult;
+    "\n  *[_type=='userActivity' && ($id match userId) && ($projectRef match projectRef)] | order(_createdAt desc){\n  ...,\n  projectRef -> {\n    slug,\n    title\n  }\n}": AVTIVITY_QUERYResult;
+    "*[_type=='project' && ($userId match author)] | order(_createdAt desc)": PROJECTPERUSERID_QUERYResult;
+  }
+}
