@@ -50,6 +50,7 @@ export default async function ProjectPage({
 
   const handleVote = async () => {
     "use server";
+    const session = await auth();
     if (!session?.user?.id) {
       return;
     }
@@ -72,6 +73,7 @@ export default async function ProjectPage({
 
   const handleUnvote = async () => {
     "use server";
+    const session = await auth();
     if (!session?.user?.id) {
       return;
     }
@@ -94,6 +96,7 @@ export default async function ProjectPage({
 
   const handleSave = async () => {
     "use server";
+    const session = await auth();
     if (!session?.user?.id) {
       return;
     } else {
